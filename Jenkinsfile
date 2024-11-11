@@ -29,7 +29,11 @@ pipeline {
 
         stage('Git Checkout') {
             steps {
-               git "https://${GIT_TOKEN}@github.com:brunosilva311/rga-tech-assessment.git"
+                checkout scmGit(
+                    branches: [[name: 'main']],
+                    userRemoteConfigs: [[credentialsId: 'git-credentials', url: 'https://github.com:brunosilva311/rga-tech-assessment.git']]
+                )
+               //git "https://${GIT_TOKEN}@github.com:brunosilva311/rga-tech-assessment.git"
             }
         }
         
