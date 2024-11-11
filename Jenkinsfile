@@ -29,7 +29,7 @@ pipeline {
 
         stage('Git Checkout') {
             steps {
-               git "https://${GIT_TOKEN}@github.com:brunosilva311/rga-tech-assessment.git"
+               git "https://github.com/brunosilva311/rga-tech-assessment.git"
             }
         }
         
