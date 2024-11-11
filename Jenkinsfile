@@ -7,8 +7,8 @@ pipeline {
         GIT_TOKEN = credentials('git-credentials')
     }
  
-    /* stages {
-        stage("Generating short-lived token") {
+    stages {
+        /* stage("Generating short-lived token") {
             steps {
                 script {
                     sh(script: 'gcloud auth print-identity-token jenkins-sa@rga-gcp-tech-assessment.iam.gserviceaccount.com --audiences="//iam.googleapis.com/projects/205545633183/locations/global/workloadIdentityPools/jenkins/providers/jenkins" > /usr/share/token/credential.key', returnStdout: true)
