@@ -30,7 +30,7 @@ pipeline {
         stage('Install Terraform') {
             steps {
                 script {
-                    def terraformVersion = '1.8.5' ## you can define whatever req version you need
+                    def terraformVersion = '1.8.5'
                     sh "wget https://releases.hashicorp.com/terraform/${terraformVersion}/terraform_${terraformVersion}_linux_amd64.zip"
                     sh "unzip -o terraform_${terraformVersion}_linux_amd64.zip"
                     sh 'chmod +x terraform'
