@@ -27,37 +27,46 @@ locals {
   project = "rga-gcp-tech-assessment"
 }
 
-resource "google_certificate_manager_certificate" "default" {
-  name        = "${local.name}-rootcert"
+# resource "google_certificate_manager_certificate" "default" {
+#   name        = "${local.name}-rootcert"
+#   project = local.project
+#   description = "Cert with LB authorization"
+#   managed {
+#     domains = [local.domain]
+#   }
+#   labels = {
+#     "terraform" : true
+#   }
+# }
+
+# resource "google_certificate_manager_certificate_map" "default" {
+#   name        = "${local.name}-certmap1"
+#   project = local.project
+#   description = "${local.domain} certificate map"
+#   labels = {
+#     "terraform" : true
+#   }
+# }
+
+# resource "google_certificate_manager_certificate_map_entry" "default" {
+#   name        = "${local.name}-first-entry"
+#   project = local.project
+#   description = "example certificate map entry"
+#   map         = google_certificate_manager_certificate_map.default.name
+#   labels = {
+#     "terraform" : true
+#   }
+#   certificates = [google_certificate_manager_certificate.default.id]
+#   hostname     = local.domain
+# }
+
+resource "google_compute_managed_ssl_certificate" "default" {
+  name = "${local.name}test-cert"
   project = local.project
-  description = "Cert with LB authorization"
+
   managed {
-    domains = [local.domain]
+    domains = ["test.base43.com.br."]
   }
-  labels = {
-    "terraform" : true
-  }
-}
-
-resource "google_certificate_manager_certificate_map" "default" {
-  name        = "${local.name}-certmap1"
-  project = local.project
-  description = "${local.domain} certificate map"
-  labels = {
-    "terraform" : true
-  }
-}
-
-resource "google_certificate_manager_certificate_map_entry" "default" {
-  name        = "${local.name}-first-entry"
-  project = local.project
-  description = "example certificate map entry"
-  map         = google_certificate_manager_certificate_map.default.name
-  labels = {
-    "terraform" : true
-  }
-  certificates = [google_certificate_manager_certificate.default.id]
-  hostname     = local.domain
 }
 
 module "static-assets_http-load-balancer-website" {
@@ -70,5 +79,5 @@ module "static-assets_http-load-balancer-website" {
   force_destroy_website = true
 
   enable_ssl = true
-  ssl_certificate = "//certificatemanager.googleapis.com/${google_certificate_manager_certificate_map.default.id}"
+  ssl_certificate = google_compute_managed_ssl_certificate.default.self_link
 }
