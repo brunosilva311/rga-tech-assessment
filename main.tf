@@ -24,10 +24,12 @@
 locals {
   name = "base43"
   domain = "test.base43.com.br"
+  project = "rga-gcp-tech-assessment"
 }
 
 resource "google_certificate_manager_certificate" "default" {
   name        = "${local.name}-rootcert"
+  project = local.project
   description = "Cert with LB authorization"
   managed {
     domains = [local.domain]
@@ -39,6 +41,7 @@ resource "google_certificate_manager_certificate" "default" {
 
 resource "google_certificate_manager_certificate_map" "default" {
   name        = "${local.name}-certmap1"
+  project = local.project
   description = "${local.domain} certificate map"
   labels = {
     "terraform" : true
@@ -47,6 +50,7 @@ resource "google_certificate_manager_certificate_map" "default" {
 
 resource "google_certificate_manager_certificate_map_entry" "default" {
   name        = "${local.name}-first-entry"
+  project = local.project
   description = "example certificate map entry"
   map         = google_certificate_manager_certificate_map.default.name
   labels = {
@@ -60,8 +64,8 @@ module "static-assets_http-load-balancer-website" {
   source  = "gruntwork-io/static-assets/google//modules/http-load-balancer-website"
   version = "0.6.0"
   
-  project = "rga-gcp-tech-assessment"
-  website_domain_name = "test.base43.com.br"
+  project = local.project
+  website_domain_name = local.domain
   force_destroy_access_logs_bucket = true
   force_destroy_website = true
 
