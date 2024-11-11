@@ -69,12 +69,12 @@ resource "google_compute_managed_ssl_certificate" "default" {
   }
 }
 
-resource "google_compute_managed_ssl_certificate" "default" {
-  name = "${local.name}test-cert"
+resource "google_compute_managed_ssl_certificate" "other-cert" {
+  name = "${local.name}other-cert"
   project = local.project
 
   managed {
-    domains = ["test.base43.com.br."]
+    domains = ["othercert.base43.com.br."]
   }
 }
 
