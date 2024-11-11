@@ -86,6 +86,7 @@ module "static-assets_http-load-balancer-website" {
   website_domain_name = local.domain
   force_destroy_access_logs_bucket = true
   force_destroy_website = true
+  website_acls = ["READER:allUsers"]
 
   enable_ssl = true
   ssl_certificate = google_compute_managed_ssl_certificate.default.self_link
