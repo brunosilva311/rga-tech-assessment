@@ -18,8 +18,12 @@ pipeline {
         
         stage("Storing credential file content into a variable") {
             steps {
-                withCredentials([file(credentialsId: 'wif-config-file', variable: 'WIF')])
-                { sh "gcloud auth login --brief --cred-file=${WIF}" }
+                withCredentials([file(credentialsId: 'wif-config-file', variable: 'WIF')]) 
+                    { 
+                        sh ''' 
+                            gcloud auth login --brief --cred-file=$WIF --quiet
+                        '''
+                    }
             }
         }
 
