@@ -72,20 +72,20 @@ pipeline {
         //     }
         // }
      
-        stage('Terraform Apply') {
-            steps {
-                script {
-                    sh 'terraform apply tfplan'
-                }
-            }
-        }
-
-        // stage('Terraform Action') {
+        // stage('Terraform Apply') {
         //     steps {
         //         script {
-        //             sh 'terraform $action --auto-approve'
+        //             sh 'terraform apply tfplan'
         //         }
         //     }
         // }
+
+        stage('Terraform Action') {
+            steps {
+                script {
+                    sh 'terraform $action --auto-approve'
+                }
+            }
+        }
     }
 }
