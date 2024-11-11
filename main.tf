@@ -25,6 +25,7 @@ locals {
   name = "base43"
   domain = "test.base43.com.br"
   project = "rga-gcp-tech-assessment"
+  ssl = true
 }
 
 # resource "google_certificate_manager_certificate" "default" {
