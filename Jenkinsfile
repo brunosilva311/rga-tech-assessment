@@ -8,7 +8,7 @@ pipeline {
     }
  
     stages {
-        stage("Generating short-lived token")
+        stage("Generating short-lived token") {
             steps {
                 script {
                     sh(script: 'gcloud auth print-identity-token jenkins-sa@rga-gcp-tech-assessment.iam.gserviceaccount.com --audiences="//iam.googleapis.com/projects/205545633183/locations/global/workloadIdentityPools/jenkins/providers/jenkins" > /usr/share/token/credential.key' returnStdout: true)
@@ -19,9 +19,7 @@ pipeline {
         stage("Storing credential file content into a variable") {
             steps {
                 withCredentials([file(credentialsId: 'wif-config-file', variable: 'WIF')])
-                sh '''
-                    gcloud auth login --brief --cred-file=$WIF
-                '''
+                sh "gcloud auth login --brief --cred-file=${WIF}"
             }
         }
 
@@ -47,7 +45,7 @@ pipeline {
             }
         }
 
-     stage('Manual Approval') {
+        stage('Manual Approval') {
             steps {
                 input "Approve?"
             }
