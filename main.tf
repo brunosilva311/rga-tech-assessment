@@ -69,6 +69,15 @@ resource "google_compute_managed_ssl_certificate" "default" {
   }
 }
 
+resource "google_compute_managed_ssl_certificate" "default" {
+  name = "${local.name}test-cert"
+  project = local.project
+
+  managed {
+    domains = ["test.base43.com.br."]
+  }
+}
+
 module "static-assets_http-load-balancer-website" {
   source  = "gruntwork-io/static-assets/google//modules/http-load-balancer-website"
   version = "0.6.0"
