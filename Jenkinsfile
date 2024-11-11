@@ -3,11 +3,11 @@ pipeline {
 
  
     environment {
-        //GOOGLE_APPLICATION_CREDENTIALS = credentials('gcp-key')
+        GOOGLE_APPLICATION_CREDENTIALS = credentials('gcp-key')
         GIT_TOKEN = credentials('git-credentials')
     }
  
-    stages {
+    /* stages {
         stage("Generating short-lived token") {
             steps {
                 script {
@@ -25,7 +25,7 @@ pipeline {
                         '''
                     }
             }
-        }
+        } */
 
         stage('Git Checkout') {
             steps {
