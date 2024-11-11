@@ -66,16 +66,24 @@ pipeline {
             }
         }
 
-        stage('Manual Approval') {
-            steps {
-                input "Approve?"
-            }
-        }
+        // stage('Manual Approval') {
+        //     steps {
+        //         input "Approve?"
+        //     }
+        // }
      
-        stage('Terraform Apply') {
+        // stage('Terraform Apply') {
+        //     steps {
+        //         script {
+        //             sh 'terraform apply tfplan'
+        //         }
+        //     }
+        // }
+
+        stage('Terraform Action') {
             steps {
                 script {
-                    sh 'terraform apply tfplan'
+                    sh 'terraform $action --auto-approve'
                 }
             }
         }
