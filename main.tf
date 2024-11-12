@@ -15,7 +15,7 @@ resource "google_compute_managed_ssl_certificate" "default" {
 }
 
 resource "google_storage_default_object_acl" "public_rule" {
-  bucket = module.static-assets_http-load-balancer-website.website_bucket
+  bucket = module.static-assets_http-load-balancer-website.website_bucket_name
   role_entity = [ "READER:allUsers" ]
 }
 
