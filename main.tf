@@ -19,6 +19,15 @@ resource "google_storage_default_object_acl" "public_rule" {
   role_entity = [ "READER:allUsers" ]
 }
 
+resource "google_storage_object_acl" "image-store-acl" {
+  bucket = module.static-assets_http-load-balancer-website.website_bucket_name
+  object = google_storage_bucket_object.indexpage.name
+
+  role_entity = [
+    "READER:allUsers"
+  ]
+}
+
 module "static-assets_http-load-balancer-website" {
   source  = "gruntwork-io/static-assets/google//modules/http-load-balancer-website"
   version = "0.6.0"
