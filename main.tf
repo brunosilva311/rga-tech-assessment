@@ -14,18 +14,9 @@ resource "google_compute_managed_ssl_certificate" "default" {
   }
 }
 
-resource "google_storage_default_object_acl" "public_rule" {
-  bucket = module.static-assets_http-load-balancer-website.website_bucket_name
-  role_entity = [ "READER:allUsers" ]
-}
-
-# resource "google_storage_object_acl" "image-store-acl" {
+# resource "google_storage_default_object_acl" "public_rule" {
 #   bucket = module.static-assets_http-load-balancer-website.website_bucket_name
-#   object = google_storage_bucket_object.indexpage.name
-
-#   role_entity = [
-#     "READER:allUsers"
-#   ]
+#   role_entity = [ "READER:allUsers" ]
 # }
 
 module "static-assets_http-load-balancer-website" {
@@ -36,7 +27,7 @@ module "static-assets_http-load-balancer-website" {
   website_domain_name = local.domain
   force_destroy_access_logs_bucket = true
   force_destroy_website = true
-  //website_acls = ["READER:allUsers"]
+  website_acls = ["READER:allUsers"]
 
   enable_ssl = true
   ssl_certificate = google_compute_managed_ssl_certificate.default.self_link
