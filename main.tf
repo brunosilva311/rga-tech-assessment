@@ -14,11 +14,10 @@ resource "google_compute_managed_ssl_certificate" "default" {
   }
 }
 
-# resource "google_storage_default_object_access_control" "public_rule" {
-#   bucket = module.static-assets_http-load-balancer-website.website_bucket
-#   role   = "READER"
-#   entity = "allUsers"
-# }
+resource "google_storage_default_object_acl" "public_rule" {
+  bucket = module.static-assets_http-load-balancer-website.website_bucket
+  role_entity = [ "READER:allUsers" ]
+}
 
 module "static-assets_http-load-balancer-website" {
   source  = "gruntwork-io/static-assets/google//modules/http-load-balancer-website"
